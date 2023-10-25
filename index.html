@@ -48,12 +48,15 @@
     <div style="width: 100%; height: 50px"></div>
     <div class="container">
       <div class="canvas-wrapper">
+        <h3>Frequency:</h3>
         <canvas id="myCanvas2"></canvas>
       </div>
       <div class="canvas-wrapper">
+        <h3>Relative frequency:</h3>
         <canvas id="myCanvas3"></canvas>
       </div>
       <div class="canvas-wrapper">
+        <h3>Normalized ratio:</h3>
         <canvas id="myCanvas4"></canvas>
       </div>
     </div>
@@ -116,7 +119,7 @@
       });
 
       attackNumber.addEventListener("input", () => {
-        calculateFrequency();
+        CalculateFrequencyHistogram();
       });
 
       ReloadAttacks();
@@ -129,16 +132,16 @@
 
         xValues = Array.from({ length: numberAttacks }, (_, i) => i);
 
-        listAttacks = generateAttacks(
+        listAttacks = GenerateAttacks(
           numberAttacks,
           probability,
           numberSystems
         );
 
-        setInterval(drawChart(listAttacks, numberSystems, "myCanvas"), 500);
+        setInterval(DrawChart(listAttacks, numberSystems, "myCanvas"), 500);
       }
 
-      function generateAttacks(numberAttacks, probability, numberSystems) {
+      function GenerateAttacks(numberAttacks, probability, numberSystems) {
         const allAttacks = [];
 
         for (let j = 0; j < numberSystems; j++) {
@@ -166,7 +169,7 @@
 
         xValues = Array.from({ length: numberAttacks }, (_, i) => i);
 
-        const frequencyValue = frequency(
+        const frequencyValue = AttacksCalculation(
           numberAttacks,
           probability,
           numberSystems
@@ -178,15 +181,15 @@
 
         //setInterval(drawChart(listCumulatedFrequencies, numberSystems, "myCanvas2"), 500);
 
-        drawChart(listCumulatedFrequencies, numberSystems, "myCanvas2");
-        drawChart(listRelativeFrequencies, numberSystems, "myCanvas3");
-        drawChart(listNormalizedFrequencies, numberSystems, "myCanvas4");
+        DrawChart(listCumulatedFrequencies, numberSystems, "myCanvas2");
+        DrawChart(listRelativeFrequencies, numberSystems, "myCanvas3");
+        DrawChart(listNormalizedFrequencies, numberSystems, "myCanvas4");
 
         //drawHistogram(listCumulatedFrequencies, numberSystems, "histogramChart");
-        calculateFrequency();
+        CalculateFrequencyHistogram();
       }
 
-      function frequency(numberAttacks, probability, numberSystems) {
+      function AttacksCalculation(numberAttacks, probability, numberSystems) {
         const cumulated = [];
         const relative = [];
         const normalized = [];
@@ -223,7 +226,7 @@
         return [cumulated, relative, normalized];
       }
 
-      function drawChart(attacks, systems, chartID) {
+      function DrawChart(attacks, systems, chartID) {
         ctx.clearRect(0, 0, chartID.width, chartID.height);
 
         const datasets = [];
@@ -280,8 +283,8 @@
       //   -----------------------------------
       // Get the canvas histogram element
 
-      calculateFrequency();
-      function calculateFrequency() {
+      CalculateFrequencyHistogram();
+      function CalculateFrequencyHistogram() {
         xAxesHistogram = [];
         yAxesHistogram = [];
         xAxesHistogramAttackN = [];
